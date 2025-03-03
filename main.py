@@ -1,38 +1,15 @@
-def word_count():
-    with open("books/frankenstein.txt") as f:
-        file_contents = f.read()
-    char_count = {}
-    for char in file_contents:
-        char = char.lower()
-        if char in char_count:
-            char_count[char] += 1
-        else:
-            char_count[char] = 1
-
-
-
-    return char_count
-
-def sort_chars_by_count():
-
-    char_count = word_count()
-
-    char_list = []
-    for char, count in char_count.items():
-        if char.isalpha():
-            char_list.append({"char":char, "count":count})
-
-    lst = sorted(char_list, key=lambda x: x["count"],reverse=True)
-   
-    
-    return lst
+from stats import sort_chars_by_count
+import sys
 def main():
-    with open("books/frankenstein.txt") as f:
+    if len(sys.argv)  < 2 :
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    with open(sys.argv[1]) as f:
         file_content = f.read()
     
     
 
-    number_of_words = sort_chars_by_count()
+    number_of_words = sort_chars_by_count(sys.argv[1])
     total_words = len((file_content).split()
 )
 
@@ -41,7 +18,7 @@ def main():
     
 
     print("============ BOOKBOT ============")
-    print("Analyzing book found at books/frankenstein.txt...")
+    print(f"Analyzing book found at {sys.argv[1]}..")
     print("----------- Word Count ----------")
     print(f"Found {total_words} total words")
     print("--------- Character Count -------")
