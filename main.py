@@ -1,8 +1,9 @@
-def word_count(file_contents):
-       
+def word_count():
+    with open("books/frankenstein.txt") as f:
+        file_contents = f.read()
     char_count = {}
-    for char in file_contents.lower():
-            
+    for char in file_contents:
+        char = char.lower()
         if char in char_count:
             char_count[char] += 1
         else:
@@ -12,34 +13,40 @@ def word_count(file_contents):
 
     return char_count
 
-def is_a_alpha(file_contents):
-    char_count = {}
-    for word in file_contents:
-        for char in word:
-            char = char.lower()
-            if char.isalpha():    
-                if char in char_count:
-                    char_count[char] += 1
-                else:
-                    char_count[char] = 1
+def sort_chars_by_count():
 
-    lst = sorted(list(char_count.items()))
+    char_count = word_count()
 
+    char_list = []
+    for char, count in char_count.items():
+        if char.isalpha():
+            char_list.append({"char":char, "count":count})
+
+    lst = sorted(char_list, key=lambda x: x["count"],reverse=True)
+   
+    
     return lst
 def main():
     with open("books/frankenstein.txt") as f:
-        file_contents = f.read()
+        file_content = f.read()
+    
+    
 
-    number_of_words = file_contents.split()
-    total_words = len(number_of_words)
+    number_of_words = sort_chars_by_count()
+    total_words = len((file_content).split()
+)
 
-    char_count = is_a_alpha(number_of_words)
+
 
     
 
-    print("--- Begin report of books/frankenstein.txt ---")
-    print(total_words)
-    for pair in char_count:
-        print(f"The '{pair[0]}' character was found {pair[1]} times")
-    print("-- End report ---")
+    print("============ BOOKBOT ============")
+    print("Analyzing book found at books/frankenstein.txt...")
+    print("----------- Word Count ----------")
+    print(f"Found {total_words} total words")
+    print("--------- Character Count -------")
+    for dic in number_of_words:
+        print(f"{dic["char"]}: {dic["count"]}")
+
+    print("============= END ===============") 
 main()
